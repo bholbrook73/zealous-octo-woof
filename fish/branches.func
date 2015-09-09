@@ -1,0 +1,16 @@
+function branches --description 'Shows branches with descriptions'
+    set branches (git for-each-ref --sort=-committerdate --format='%(refname)' refs/heads/ | sed 's|refs/heads/||' | tac)
+    
+    for branch in $branches
+        set last_used (git show --pretty=format:"%Cgreen%cr%Creset" $branch -- | head -1)
+        set desc (git config branch.$branch.description)
+        
+        if test $branch = (git rev-parse --abbrev-ref HEAD)
+            set branch "*\t$last_used\t\033[0;32m$branch\033[0m"
+        else
+            set branch "\t$last_used\t$branch"
+        end
+        
+        echo -e "$branch \033[0;36m$desc\033[0m"
+    end
+end
