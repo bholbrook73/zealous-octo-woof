@@ -1,0 +1,9 @@
+function hex --description 'Convert decimal to hexadecimal'
+printf "0x%x\n" $argv
+end
+function dec --description 'Convert hexadecimal to decimal'
+printf "%d\n" $argv
+end
+function dpkg-info --description 'show package info'
+apt-cache show $argv | more
+end
